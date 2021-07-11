@@ -25,7 +25,6 @@ import {
 import { Track } from "./track";
 import { Dots } from "./dots";
 import { PrevArrow, NextArrow } from "./arrows";
-import ResizeObserver from "resize-observer-polyfill";
 
 export class InnerSlider extends React.Component {
   constructor(props) {
@@ -304,7 +303,8 @@ export class InnerSlider extends React.Component {
   };
   checkImagesLoad = () => {
     let images =
-      (this.list && this.list.querySelectorAll &&
+      (this.list &&
+        this.list.querySelectorAll &&
         this.list.querySelectorAll(".slick-slide img")) ||
       [];
     let imagesCount = images.length,
