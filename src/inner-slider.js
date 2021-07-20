@@ -26,6 +26,13 @@ import { Track } from "./track";
 import { Dots } from "./dots";
 import { PrevArrow, NextArrow } from "./arrows";
 
+async function polyfillResizeObserver() {
+  if ("ResizeObserver" in window === false) {
+    // Loads polyfill asynchronously, only if required.
+    const module = await import("@juggle/resize-observer");
+    window.ResizeObserver = module.ResizeObserver;
+  }
+}
 export class InnerSlider extends React.Component {
   constructor(props) {
     super(props);
@@ -52,7 +59,7 @@ export class InnerSlider extends React.Component {
       this.list.style.height = getHeight(elem) + "px";
     }
   };
-  componentDidMount = () => {
+  componentDidMount = async () => {
     this.props.onInit && this.props.onInit();
     if (this.props.lazyLoad) {
       let slidesToLoad = getOnDemandLazySlides({
@@ -76,6 +83,7 @@ export class InnerSlider extends React.Component {
     if (this.props.lazyLoad === "progressive") {
       this.lazyLoadTimer = setInterval(this.progressiveLazyLoad, 1000);
     }
+    await polyfillResizeObserver();
     this.ro = new ResizeObserver(() => {
       if (this.state.animating) {
         this.onWindowResized(false); // don't set trackStyle hence don't break animation

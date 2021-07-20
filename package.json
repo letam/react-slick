@@ -88,6 +88,7 @@
     "why-did-you-update": "^0.1.1"
   },
   "dependencies": {
+    "@juggle/resize-observer": "^3.3.1",
     "classnames": "^2.2.5",
     "enquire.js": "^2.1.6",
     "json2mq": "^0.2.0",
